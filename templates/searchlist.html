@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+{% block title %} Home {% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2>Students <b>List </b></h2>
+                <table class="table table-hover table-dark">
+                    <tr class="text-center">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>RollNo</th>
+                        <th>Class</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                   {% for row in data %}
+                    <tr class="text-center">
+                        <td>{{row.id}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.rollno}}</td>
+                        <td>{{row.classs}}</td>
+                        <td>{{row.date}}</td>
+                        <td>{{row.Status}}</td>
+                    </tr>
+{% endfor %}
+</table>
+ </div> 
+ {% endblock %}

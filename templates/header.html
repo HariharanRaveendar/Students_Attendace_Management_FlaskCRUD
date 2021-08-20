@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %} Flask CRUD {% endblock %}
+
+
+
+{% block body %}
+
+<div class="jumbotron p-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Students</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active mr-2">
+              <a class="btn btn-success float-right" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item mr-2">
+                <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">Add New Students</button>
+            </li>
+            <li class="nav-item">
+                <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#attendance">Students Attendance</button>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0" action="/search" method="GET" >
+            <table class="none" id="close">
+                <tr>
+                <td class="mr-3"><big><b>Search Reference : </b></big></td>
+                <td class="ml-5"><select class="browser-default custom-select " name="refer">
+                    <option value="name">Name</option>
+                    <option value="rollno">Roll No</option>
+                    <option value="classs">Class</option>
+                    <option value="date">Date</option>
+                    <option value="Status">Status</option>
+                </select></td>
+                <td><input class="form-control mr-sm-2" type="text" name="key" placeholder="Search" aria-label="Search"></td>
+                <td><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></td>
+                </tr>
+                </table>      
+          </form>
+        </div>
+      </nav>
+
+</div>
+
+
+{% endblock %}

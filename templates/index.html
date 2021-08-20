@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+{% block title %} Home {% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2>Manage <b>Students </b></h2>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <table class="table table-hover table-dark">
+                    <tr class="text-center">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>RollNo</th>
+                        <th>Class</th>
+                        <th>Action</th>
+                    </tr>
+                   {% for row in students %}
+                    <tr class="text-center">
+                        <td>{{row.id}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.rollno}}</td>
+                        <td>{{row.classs}}</td>
+                        <td>
+                            <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
+                            <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+                        </td>
+                    </tr>
+<div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Update Information</h4>
+         </div>
+         <div class="modal-body">
+            <form action="{{url_for('update')}}" method="POST">
+               <div class="form-group">
+                  <label>Name:</label>
+                   <input type="hidden"  name="id" value="{{row.id}}">
+                  <input type="text" class="form-control" name="name" value="{{row.name}}">
+               </div>
+               <div class="form-group">
+                  <label>RollNo:</label>
+                  <input type="number" class="form-control" name="roll" value="{{row.rollno}}">
+               </div>
+               <div class="form-group">
+                  <label>Class:</label>
+                  <input type="text" class="form-control" name="class" value="{{row.classs}}">
+               </div>
+               <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Update</button>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         </div>
+      </div>
+   </div>
+</div>
+{% endfor %}
+</table>
+ </div>
+
+
+ <div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2>Students <b>Attendance </b></h2>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <table class="table table-hover table-dark">
+                    <tr class="text-center">
+                        <th>Name</th>
+                        <th>RollNo</th>
+                        <th>Class</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                   {% for row in attendnce %}
+                    <tr class="text-center">
+                        <td>{{row.name}}</td>
+                        <td>{{row.rollno}}</td>
+                        <td>{{row.classs}}</td>
+                        <td>{{row.date}}</td>
+                        <td>{{row.Status}}</td>
+                        
+                        <td>
+                            <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#attendance{{row.id}}">Edit</a>
+                            <a href="/deleteattenance/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+                        </td>
+                    </tr>
+                    <div id="attendance{{row.id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                     
+                                 <h4 class="modal-title">Students Attendance</h4>
+                              </div>
+                              <div class="modal-body">
+                                 <form action="{{url_for('updateattendance')}}" method="POST">
+                                    <div class="form-group">
+                                        <label>Name:</label>
+                                        <input type="hidden"  name="id" value="{{row.id}}">
+                                        <select class="browser-default custom-select" name="name">
+                                          <option selected>{{row.name}}</option>
+                                          {% for row in students %}
+                                          <option value="{{row.name}}">{{row.name}}</option>
+                                          {% endfor %}
+                                        </select>
+                                    </div>
+                                     <div class="form-group">
+                                        <label>RollNo:</label>
+                                        <select class="browser-default custom-select" name="roll">
+                                          <option selected>{{row.rollno}}</option>
+                                          {% for row in students %}
+                                          <option value="{{row.rollno}}">{{row.rollno}}</option>
+                                          {% endfor %}
+                                        </select>
+                                    </div>
+                                     <div class="form-group">
+                                        <label>Class:</label>
+                                        <select class="browser-default custom-select" name="class">
+                                          <option selected>{{row.classs}}</option>
+                                          {% for row in students %}
+                                          <option value="{{row.classs}}">{{row.classs}}</option>
+                                          {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="mr-3">Status:</label>
+                                            <!-- Group of default radios - option 1 -->
+                                            <input type="radio" class="" name="status" id="present" value="Present"> Present </input>
+                                            <input type="radio" name="status" id="absent" value="Absent"> Absent </input><br>
+                                     </div>
+                                     <div class="form-group">
+                                    <label>Date:</label>
+                                     <input type="date" name="date" id="defaultLoginFormEmail" value="{{row.date}}" class="form-control mb-4" placeholder="Select Date" required>
+                                     </div>
+                                    
+                                    <div class="form-group">
+                                       <button class="btn btn-primary" type="submit">Add Attendance</button>
+                                    </div>
+                                 </form>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+{% endfor %}
+</table>
+ </div> 
+
+<div id="mymodal" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+
+            <h4 class="modal-title">Add Students</h4>
+         </div>
+         <div class="modal-body">
+            <form action="{{url_for('insert')}}" method="POST">
+               <div class="form-group">
+                  <label>Name:</label>
+                  <input type="text" class="form-control" name="name" required="1">
+               </div>
+                <div class="form-group">
+                  <label>Roll Number:</label>
+                  <input type="number" class="form-control" name="roll" required="1">
+               </div>
+                <div class="form-group">
+                  <label>Class:</label>
+                  <input type="text" class="form-control" name="class" required="1">
+               </div>
+               <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Add Student</button>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         </div>
+      </div>
+   </div>
+</div>
+<div id="attendance" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header">
+ 
+             <h4 class="modal-title">Students Attendance</h4>
+          </div>
+          <div class="modal-body">
+             <form action="{{url_for('insertattendance')}}" method="POST">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <select class="browser-default custom-select" name="name">
+                      <option selected>Select the Student Name</option>
+                      {% for row in students %}
+                      <option value="{{row.name}}">{{row.name}}</option>
+                      {% endfor %}
+                    </select>
+                </div>
+                 <div class="form-group">
+                    <label>RollNo:</label>
+                    <select class="browser-default custom-select" name="roll">
+                      <option selected>Select the Student Roll Number</option>
+                      {% for row in students %}
+                      <option value="{{row.rollno}}">{{row.rollno}}</option>
+                      {% endfor %}
+                    </select>
+                </div>
+                 <div class="form-group">
+                    <label>Class:</label>
+                    <select class="browser-default custom-select" name="class">
+                      <option selected>Select the Student Classs</option>
+                      {% for row in students %}
+                      <option value="{{row.classs}}">{{row.classs}}</option>
+                      {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="mr-3">Status:</label>
+                        <!-- Group of default radios - option 1 -->
+                        <input type="radio" class="" name="status" id="present" value="Present"> Present </input>
+                        <input type="radio" name="status" id="absent" value="Absent"> Absent </input><br>
+                 </div>
+                 <div class="form-group">
+                <label>Date:</label>
+                 <input type="date" name="date" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Select Date" required>
+                 </div>
+                
+                <div class="form-group">
+                   <button class="btn btn-primary" type="submit">Add Attendance</button>
+                </div>
+             </form>
+          </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+       </div>
+    </div>
+ </div>
+</div>
+</div>
+</div> 
+{% endblock %}
